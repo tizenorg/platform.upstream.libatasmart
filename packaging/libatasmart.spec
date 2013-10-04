@@ -2,18 +2,28 @@ Name:     libatasmart
 Summary:  The libatasmart
 Version:  0.19
 Release:  1
-License:  GPL 2
-Group:    System Environment/Kernel
+License:  GPL-2.0
+Group:    Base/Device Management
 URL:      http://code.google.com/p/cryptsetup/
 Source0:  %{name}-%{version}.tar.gz
 
 BuildRequires: pkgconfig(systemd)
-BuildRequires: device-mapper-devel
 BuildRequires: pkgconfig(libudev)
+BuildRequires: device-mapper-devel
 
+Requires:      libdevmapper
 
 %description
 setup cryptographic volumes for dm-crypt (including LUKS extension)
+
+%package devel
+License:  LGPL-2.1
+Summary:  The development libatasmart
+Group:    Base/Device Management
+Requires: %{name} = %{version}-%{release}
+
+%description devel
+setup cryptographic volumes for dm-crypt (including LUKS extension) - development package.
 
 %prep
 %setup -q
@@ -28,17 +38,22 @@ make %{?jobs:-j%jobs}
 rm -rf %{buildroot}
 %make_install
 
+%post -p /sbin/ldconfig
+
+%postun -p /sbin/ldconfig
+
 %clean
 
-%post
-
 %files
-/usr/include/atasmart.h
 /usr/lib/libatasmart.so
 /usr/lib/libatasmart.so.4
 /usr/lib/libatasmart.so.4.0.5
-/usr/lib/pkgconfig/libatasmart.pc
 /usr/sbin/skdump
 /usr/sbin/sktest
 /usr/share/doc/libatasmart/README
 /usr/share/vala/vapi/atasmart.vapi
+
+%files devel
+/usr/include/atasmart.h
+/usr/lib/libatasmart.so
+/usr/lib/pkgconfig/libatasmart.pc
