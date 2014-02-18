@@ -30,7 +30,7 @@ setup cryptographic volumes for dm-crypt (including LUKS extension) - developmen
 
 %build
 ./autogen.sh
-%configure CFLAGS='-g -O0 -Wp,-U_FORTIFY_SOURCE' --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib --libexecdir=/usr/lib
+%configure CFLAGS='-g -O0 -Wp,-U_FORTIFY_SOURCE' --sysconfdir=%{_sysconfdir} --localstatedir=%{_localstatedir} --libdir=%{_libdir} --libexecdir=%{_libdir}
 
 make %{?jobs:-j%jobs}
 
@@ -45,15 +45,15 @@ rm -rf %{buildroot}
 %clean
 
 %files
-/usr/lib/libatasmart.so
-/usr/lib/libatasmart.so.4
-/usr/lib/libatasmart.so.4.0.5
-/usr/sbin/skdump
-/usr/sbin/sktest
-/usr/share/doc/libatasmart/README
-/usr/share/vala/vapi/atasmart.vapi
+%{_libdir}/libatasmart.so
+%{_libdir}/libatasmart.so.4
+%{_libdir}/libatasmart.so.4.0.5
+%{_sbindir}/skdump
+%{_sbindir}/sktest
+%{_datarootdir}/doc/libatasmart/README
+%{_datarootdir}/vala/vapi/atasmart.vapi
 
 %files devel
-/usr/include/atasmart.h
-/usr/lib/libatasmart.so
-/usr/lib/pkgconfig/libatasmart.pc
+%{_includedir}/atasmart.h
+%{_libdir}/libatasmart.so
+%{_libdir}/pkgconfig/libatasmart.pc
