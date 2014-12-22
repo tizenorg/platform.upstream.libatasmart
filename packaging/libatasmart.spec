@@ -30,7 +30,7 @@ setup cryptographic volumes for dm-crypt (including LUKS extension) - developmen
 
 %build
 ./autogen.sh
-%configure CFLAGS='-g -O0 -Wp,-U_FORTIFY_SOURCE' --sysconfdir=%{_sysconfdir} --localstatedir=%{_localstatedir} --libdir=%{_libdir} --libexecdir=%{_libdir}
+%configure CFLAGS='${CFLAGS} -g -O0 -Wp,-U_FORTIFY_SOURCE' --sysconfdir=%{_sysconfdir} --localstatedir=%{_localstatedir} --libdir=%{_libdir} --libexecdir=%{_libdir}
 
 make %{?jobs:-j%jobs}
 
